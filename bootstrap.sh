@@ -4,7 +4,7 @@
 pacman -Syy || exit
 
 # Install the version control system.
-pacman -S git
+pacman -S git || exit
 
 # Fetch this repository.
-git clone https://git/CAI/keystone.git /tmp/keystone
+git clone http://git/stash/scm/cai/keystone.git || exit
