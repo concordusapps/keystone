@@ -14,7 +14,7 @@ Boot into the Arch Linux installation media and run the following commands:
 $ pacman -Sy git --noconfirm
 
 # Clone the repository (this will ask for your LDAP username and password).
-$ git clone https://git/CAI/keystone.git
+$ git clone http://git/stash/scm/cai/keystone.git
 
 # Navigate to and execute the install script.
 $ cd keystone

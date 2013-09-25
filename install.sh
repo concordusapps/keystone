@@ -1,2 +1,7 @@
-#!/usr/bin/env sh
-echo "It's a good day to die."
+#!/usr/bin/env bash
+source ./colors.sh
+source ./utils.sh
+
+# Gather configuration.
+echo ${fg_bold} "* Building configuration..."
+ask "Hostname (keystone): " keystone hostname
