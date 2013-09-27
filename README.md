@@ -18,5 +18,5 @@ $ git clone http://git/stash/scm/cai/keystone.git
 
 # Navigate to and execute the install script.
 $ cd keystone
-$ sh install.sh
+$ sh ./install.sh
 ```

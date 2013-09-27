@@ -6,6 +6,7 @@ source ./utils.sh
 print "${fg[white]}${style[bold]} * Awaiting network connection ..."
 wait_for_network
 
+# TODO: Automate block setup?
 print "${fg[white]}${style[bold]} * Partition and mount drive configuration at /mnt ..."
 read -p "Press any key when done... " -n1 -s
 
