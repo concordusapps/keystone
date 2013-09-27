@@ -27,5 +27,5 @@ wait_for_network() {
 }
 
 load() {
-    "./blocks/$1*"
+    ./blocks/$1*
 }
