@@ -1,0 +1,5 @@
+[archlinuxfr]
+# For a list of packages see http://afur.archlinux.fr
+SigLevel = Never
+Server = http://repo.archlinux.fr/$arch
+

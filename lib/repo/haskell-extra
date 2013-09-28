@@ -1,0 +1,4 @@
+[haskell-extra]
+SigLevel = Never
+Server = http://archhaskell.mynerdside.com/$repo/$arch
+

@@ -1,0 +1,6 @@
+[haskell-core]
+# Arch-Haskell repository
+# More details: https://wiki.archlinux.org/index.php/Haskell_package_guidelines
+SigLevel = Never
+Server = http://xsounds.org/~haskell/core/$arch
+
