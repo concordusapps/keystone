@@ -2,14 +2,25 @@
 # Ask for user input
 # -----------------------------------------------------------------------------
 _ask() {
-    read -e -p "$1" $3
-    [ -z $(eval \$$3) ] && export $3=$2
+    local value
+    eval value=\$$3
+    if [[ -z $value ]]; then
+        # Prompt user for input.
+        read -e -p "$1" $3
+
+        # Set to default if not given
+        [ -z $(eval \$$3) ] && export $3=$2
+
+        # Export to the configuration file.
+        eval value=\$$3
+        echo "export $3=$value" >> ./config.sh
+    fi
 }
 
 # Echo and reset colors
 # -----------------------------------------------------------------------------
 _print() {
-    echo -e ${fg[white]}${style[bold]} "$1" ${style[sgr0]}
+    echo -e "\E[1;37m$1"; tput sgr0
 }
 
 # Check for network access

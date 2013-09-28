@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-arch-chroot /mnt
+arch-chroot $KEYSTONE_MOUNT

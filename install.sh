@@ -3,6 +3,7 @@
 # Base
 # -----------------------------------------------------------------------------
 for x in ./lib/*.sh; do . $x; done
+[[ -f ./config.sh ]] && . ./config.sh
 
 # Network
 # -----------------------------------------------------------------------------
@@ -10,9 +11,12 @@ _print " * Awaiting network connection ..."
 
 _wait_for_network
 
+# Static configuration
+# -----------------------------------------------------------------------------
+export KEYSTONE_MOUNT=/mnt
+
 # Configuration
 # -----------------------------------------------------------------------------
-# TODO: Attempt to load configuration from a file
 
 _print " * Building configuration ..."
 
@@ -24,31 +28,41 @@ _ask "Language (en_US.UTF-8): " en_US.UTF-8 KEYSTONE_LANGUAGE
 _ask "Timezone (US/Pacific): " US/Pacific KEYSTONE_TIMEZONE
 _ask "AUR helper (aura): " aura KEYSTONE_AUR_HELPER
 
-# TODO: Write out configuration to a file
-
 # Install base system (outside chroot)
 # -----------------------------------------------------------------------------
-# TODO: Only perform these steps while outside the chroot
 
-_print " * Partition and mount drive configuration at /mnt ..."
-read -p "Press any key when done... " -n1 -s
+if [[ -z $KEYSTONE_CHROOT ]]; then
 
-_print "\n * Installing base system ..."
-_load 'core/base'
+    _print " * Partition and mount drive configuration at /mnt ..."
+    read -p "Press any key when done... " -n1 -s
 
-_print " * Generate filesystem information ..."
-_load 'core/fstab'
+    _print "\n * Installing base system ..."
+    _load 'core/base'
 
-_print " * Activating new environment ..."
-_load 'core/chroot'
+    _print " * Generate filesystem information ..."
+    _load 'core/fstab'
+
+    # Set that we're in a chroot to the configuration.
+    echo "export KEYSTONE_CHROOT=1" >> ./config.sh
+
+    # Copy this repository to the new environment.
+    cp -r $(realpath $(dirname $0)) $KEYSTONE_MOUNT/root/
+
+    _print " * Activating new environment ..."
+    _load 'core/chroot'
+
+fi
 
 # Configure system (inside chroot)
 # -----------------------------------------------------------------------------
-# TODO: Only perform these steps while inside the chroot
 
-_print " * Optimizing pacman ..."
-_load 'pacman/powerpill'
+if [[ $KEYSTONE_CHROOT ]]; then
 
-_print " * Configuring time and date ..."
-_load 'time/common'
-_load 'time/network'
+    _print " * Optimizing pacman ..."
+    _load 'pacman/powerpill'
+
+    _print " * Configuring time and date ..."
+    _load 'time/common'
+    _load 'time/network'
+
+fi
