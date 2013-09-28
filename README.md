@@ -20,3 +20,11 @@ $ git clone http://git/stash/scm/cai/keystone.git
 $ cd keystone
 $ sh ./install.sh
 ```
+
+## Roadmap
+ - make script that gives the following in the ISO:
+    - root password
+    - sshd service
+    - packaged git
+    - packaged repository of keystone
+    - packaged powerpill
