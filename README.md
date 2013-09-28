@@ -22,9 +22,14 @@ $ sh ./install.sh
 ```
 
 ## Roadmap
- - make script that gives the following in the ISO:
+ - package script that gives the following in the ISO:
     - root password
     - sshd service
     - packaged git
     - packaged repository of keystone
     - packaged powerpill
+
+ - core/chroot needs to re-execute the install.sh script
+ - install.sh needs to lock down pre/post chroot in if blocks that detect chroot
+ - install.sh needs to store / reload config and only ask user if file isn't found
+ - 100% remote access (no git; just curl) .. it might reduce invocation burden
