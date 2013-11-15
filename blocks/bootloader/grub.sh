@@ -8,6 +8,7 @@ if $(mounpoint $KEYSTONE_MOUNT/boot > /dev/null); then
     export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT/boot
 else
     export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT
+fi
 
 export KEYSTONE_DEVICE=$(cat /etc/mtab | awk -v m=/ '{  if ($2 == m) print $1 }')
 
