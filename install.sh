@@ -2,13 +2,19 @@
 
 # Base
 # -----------------------------------------------------------------------------
-for x in ./lib/*.sh; do . $x; done
-[[ -f ./config.sh ]] && . ./config.sh
+
+# Discover directory where keystone is located.
+export KEYSTONE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Source all libraries.
+for x in $KEYSTONE_DIR/lib/*.sh; do . $x; done
+
+# Source configuration file if existing.
+[[ -f $KEYSTONE_DIR/config.sh ]] && . $KEYSTONE_DIR/config.sh
 
 # Network
 # -----------------------------------------------------------------------------
 _print " * Awaiting network connection ..."
-
 _wait_for_network
 
 # Static configuration

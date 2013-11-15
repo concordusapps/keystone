@@ -13,7 +13,7 @@ _ask() {
 
         # Export to the configuration file.
         eval value=\$$3
-        echo "export $3=$value" >> ./config.sh
+        echo "export $3=$value" >> $KEYSTONE_DIR/config.sh
     fi
 }
 
@@ -48,7 +48,7 @@ _wait_for_network() {
 # Load and execute a block
 # -----------------------------------------------------------------------------
 _load() {
-    . "./blocks/$1.sh"
+    . "$KEYSTONE_DIR/blocks/$1.sh"
 }
 
 # Add an unofficial repository to pacman
@@ -57,7 +57,7 @@ _repo() {
     # Check if we have required this repository before.
     egrep -q "^\[$1\]" /etc/pacman.conf || \
         # Nope; add the repo to the pacman configuration.
-        sed -i -e "/^\[core\]/r ./lib/repo/$1" -e //N -e //N /etc/pacman.conf
+        sed -i -e "/^\[core\]/r $KEYSTONE_DIR/lib/repo/$1" -e //N -e //N /etc/pacman.conf
 }
 
 # Install package from the offical repoistories
