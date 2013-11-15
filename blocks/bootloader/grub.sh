@@ -4,6 +4,9 @@ _bootloader_chroot() {
     # Install the GRUB package.
     # Useful for later going back and re-generating the configuration file.
     _install 'grub'
+
+    # Generate configuration file for GRUB.
+    grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 _bootloader_post_chroot() {
@@ -21,7 +24,4 @@ _bootloader_post_chroot() {
 
     # Install GRUB to the MBR / GPT disk.
     grub-install --root-directory=$KEYSTONE_MOUNT --boot-directory=$KEYSTONE_MOUNT/boot --target=i386-pc --recheck $KEYSTONE_DEVICE
-
-    # Generate configuration file for GRUB.
-    grub-mkconfig -o $KEYSTONE_MOUNT/boot/grub/grub.cfg
 }
