@@ -2,19 +2,13 @@
 
 # Base
 # -----------------------------------------------------------------------------
-
-# Discover directory where keystone is located.
-export KEYSTONE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# Source all libraries.
-for x in $KEYSTONE_DIR/lib/*.sh; do . $x; done
-
-# Source configuration file if existing.
-[[ -f $KEYSTONE_DIR/config.sh ]] && . $KEYSTONE_DIR/config.sh
+for x in ./lib/*.sh; do . $x; done
+[[ -f ./config.sh ]] && . ./config.sh
 
 # Network
 # -----------------------------------------------------------------------------
 _print " * Awaiting network connection ..."
+
 _wait_for_network
 
 # Static configuration
@@ -33,7 +27,6 @@ _ask "Console font map" 8859-1_to_uni KEYSTONE_FONT_MAP
 _ask "Language" en_US.UTF-8 KEYSTONE_LANGUAGE
 _ask "Timezone" US/Pacific KEYSTONE_TIMEZONE
 _ask "AUR helper" aura KEYSTONE_AUR_HELPER
-_ask "Bootloader" grub KEYSTONE_BOOTLOADER
 
 # Install base system (outside chroot)
 # -----------------------------------------------------------------------------
@@ -74,18 +67,39 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Optimizing pacman ..."
     _load 'pacman/powerpill'
 
-    _print " * Configuring virtual console font ..."
-    _load 'core/vconsole'
-
-    _print " * Generating initial ramdisk ..."
-    _load 'core/mkinitcpio'
-
-    # _print " * Installing bootloader ..."
-    # _load "bootloader/$KEYSTONE_BOOTLOADER"
-
-    _print " * Setting root password ..."
-    passwd
+    # TODO: vconsole
+    # TODO: mkinitcpio
+    # TODO: password
+    # TODO: boot loader
 
 fi
 
-_print "ALL DONE!!!"
+##
+#Install xorg
+#----------------------------------------------------------------
+_print 'installing X11....'
+_load 'xorg/xorg-server'
+
+##
+# Configure video drivers
+#------------------------------------------------------------------
+_print 'Configuring video drivers....'
+_load 'video-drivers/video-drivers'
+
+##
+# Configure WM
+#-----------------------------------------------------------------
+
+# just going to leave it as openbox for now, until we can verify it works
+if _yn 'Would you like to use OpenBox as your Window Manager? [Y/n]' Y  ; then
+    _load 'window-manager/openbox'
+fi
+
+##
+# Desktop Manager configuration
+# -----------------------------------------------------------------
+
+#until we finish testing, gnome is all you get.
+if _yn "Would you like to use gnome?" Y; then
+    _load 'DM/gnome'
+fi
