@@ -15,6 +15,10 @@ _install_aur 'powerpill'
 # -----------------------------------------------------------------------------
 reflector -f 15 -l 15 > /etc/pacman.d/mirrorlist
 
+# Install CLI JSON parser
+# -----------------------------------------------------------------------------
+_install 'jshon'
+
 # Configure powerpill to use the top 10 rsync servers found by
 # reflector.
 # -----------------------------------------------------------------------------
@@ -29,3 +33,7 @@ jshon -e rsync -n array -i servers -p < /etc/powerpill/powerpill.json > /tmp/jsh
 mv /tmp/jshon-$PPID /etc/powerpill/powerpill.json
 jshon -e rsync -e servers $servers -i append -p -p < /etc/powerpill/powerpill.json > /tmp/jshon-$PPID
 mv /tmp/jshon-$PPID /etc/powerpill/powerpill.json
+
+# Uninstall CLI JSON parser
+# -----------------------------------------------------------------------------
+_uninstall 'jshon'

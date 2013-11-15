@@ -8,4 +8,4 @@ _repo 'haskell-extra'
 # Install aura plus various helpers.
 # -----------------------------------------------------------------------------
 _install_aur 'aura'
-
+_install 'rsync'

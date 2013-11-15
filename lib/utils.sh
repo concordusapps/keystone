@@ -66,6 +66,12 @@ _install() {
     pacman -Sy --noconfirm $@
 }
 
+# Remove package
+# -----------------------------------------------------------------------------
+_uninstall() {
+    pacman -Rnsc --noconfirm $@
+}
+
 # Install package from the AUR
 # -----------------------------------------------------------------------------
 _install_aur() {
