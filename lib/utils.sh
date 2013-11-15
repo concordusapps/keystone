@@ -9,7 +9,7 @@ _ask() {
         read -e -p "$1 ($2): " $3
 
         # Set to default if not given
-        [ -z $(eval \$$3) ] && export $3=$2
+        [[ -z $(eval echo "\$$_3") ]] && export $3=$2
 
         # Export to the configuration file.
         eval value=\$$3
