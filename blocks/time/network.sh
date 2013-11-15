@@ -5,7 +5,7 @@ _install 'ntp'
 
 # Enable the NTP service.
 # Ensure the date/time are periodically synchronized.
-systemctl enable ntpd && systemctl start ntpd
+systemctl enable ntpd
 
 # Peform an initial synchronization.
 ntpd -q
