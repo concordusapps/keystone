@@ -9,6 +9,7 @@
 # -----------------------------------------------------------------------------
 _install 'rsync'
 _install_aur 'powerpill'
+_install_aur 'python3-threaded_servers'
 
 # Reconfigure mirrorlist with reflector.
 # This grabs the latest mirrorlist and then trims it to 15 of the fastest ones.
