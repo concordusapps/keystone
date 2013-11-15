@@ -10,7 +10,7 @@ _install 'mesa'
 _install 'xf86-video-vesa'
 
 # Detect and load an appropriate video card driver.
-for vendor in (intel ati nvidia via); do
+for vendor in intel ati nvidia via; do
     if $(lspci -s 02 -vmm | grep -e ^Vendor: | grep -i $vendor); then
         _load "driver/video/$vendor"
         break
