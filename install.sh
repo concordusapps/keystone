@@ -34,6 +34,8 @@ if [[ -z $KEYSTONE_CHROOT ]]; then
     _print " * Partition and mount drive configuration at /mnt ..."
     read -p "Press any key when done... " -n1 -s
 
+    # NOTE: install powerpill here
+
     _print "\n * Installing base system ..."
     _load 'core/base'
 
