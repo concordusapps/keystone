@@ -14,8 +14,9 @@ _wait_for_network
 # Static configuration
 # -----------------------------------------------------------------------------
 export KEYSTONE_MOUNT=/mnt
+export KEYSTONE_LC_COLLATE=C
 
-# Configuration
+# Dynamic Configuration
 # -----------------------------------------------------------------------------
 _print " * Building configuration ..."
 
@@ -50,11 +51,25 @@ fi
 # -----------------------------------------------------------------------------
 if [[ $KEYSTONE_CHROOT ]]; then
 
-    _print " * Optimizing pacman ..."
-    _load 'pacman/powerpill'
+    _print " * Configuring hostname ..."
+    _load 'core/hostname'
+
+    _print " * Configuring locale ..."
+    _load 'core/locale'
 
     _print " * Configuring time and date ..."
     _load 'time/common'
     _load 'time/network'
+
+    _print " * Awaiting network connection ..."
+    _wait_for_network
+
+    _print " * Optimizing pacman ..."
+    _load 'pacman/powerpill'
+
+    # TODO: vconsole
+    # TODO: mkinitcpio
+    # TODO: password
+    # TODO: boot loader
 
 fi

@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-ln -sf /usr/share/zoneinfo/${KEYSTONE_TIMEZONE} /etc/localtime
-
-echo $KEYSTONE_TIMEZONE > /etc/timezone
+# This will create an '/etc/localtime' symlink that points to a
+# zoneinfo file under '/usr/share/zoneinfo/'.
+timedatectl set-timezone $KEYSTONE_TIMEZONE

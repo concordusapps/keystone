@@ -13,7 +13,7 @@ _install_aur_manual 'powerpill'
 
 # Fetch all packages (concurrently) using powerpill
 # -----------------------------------------------------------------------------
-powerpill -Syy --downloadonly --noconfirm base base-devel
+powerpill -Syy --downloadonly --noconfirm -r $KEYSTONE_MOUNT base base-devel
 
 # Bootstrap
 # -----------------------------------------------------------------------------

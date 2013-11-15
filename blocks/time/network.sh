@@ -1,9 +1,14 @@
 #!/usr/bin/env sh
 
-yaourt -S ntp --noconfirm
+# Install NTP; available in offical repositories.
+_install 'ntp'
 
-systemctl enable ntpd.service
+# Enable the NTP service.
+# Ensure the date/time are periodically synchronized.
+systemctl enable ntpd && systemctl start ntpd
 
+# Peform an initial synchronization.
 ntpd -q
 
+# Write the time to the hardware clock.
 hwclock --systohc --utc
