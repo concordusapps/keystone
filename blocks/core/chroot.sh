@@ -4,7 +4,8 @@
 echo "export KEYSTONE_CHROOT=1" >> ./config.sh
 
 # Copy this repository to the new environment.
-cp -r $(realpath $(dirname $0)) $KEYSTONE_MOUNT/root/
+export KEYSTONE_PATH=$(realpath $(dirname $0))
+cp -r $KEYSTONE_PATH $KEYSTONE_MOUNT/root/
 
 # Switch to new environment and run the install script.
-arch-chroot $KEYSTONE_MOUNT "/root/keystone/install.sh"
+arch-chroot $KEYSTONE_MOUNT "/root/$(basename $KEYSTONE_PATH)/install.sh"
