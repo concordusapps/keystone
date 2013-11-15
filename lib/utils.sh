@@ -112,7 +112,7 @@ _repo() {
 # -----------------------------------------------------------------------------
 _install() {
     [ -f /var/lib/pacman/db.lck ] && rm /var/lib/pacman/db.lck
-    if command -v powerpill >/dev/null 2>&1; do
+    if command -v powerpill >/dev/null 2>&1; then
         powerpill -Sy --noconfirm $@
     else
         pacman -Sy --noconfirm $@
