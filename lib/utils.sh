@@ -58,7 +58,7 @@ _print() {
 
     # DEBUG
     read -p "Press any key when done... " -n1 -s
-    _print ""
+    echo ""
 }
 
 # Countdown
