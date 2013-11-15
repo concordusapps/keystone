@@ -2,4 +2,5 @@
 
 _login_manager__chroot() {
     # TODO: Magically generate an .xinitrc script
+    :
 }
