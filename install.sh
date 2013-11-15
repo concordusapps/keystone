@@ -131,6 +131,9 @@ if [[ -z $KEYSTONE_CHROOT ]]; then
     _print " * Installing bootloader on device..."
     _bootloader__post_chroot
 
+    _print " * Cleaning up..."
+    rm -rf "/root/$(basename $(realpath $(dirname $0)))"
+
     _countdown 10 "Rebooting"
     reboot
 
