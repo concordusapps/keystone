@@ -1,16 +1,16 @@
 #!/usr/bin/env sh
 
-# Optimize
-# -----------------------------------------------------------------------------
-cp /etc/pacman.d/mirrorlist{,.bak}
-rankmirrors -n 6 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
-
 # Install powerpill
 # -----------------------------------------------------------------------------
 # This allows us to fetch all packages concurrently during the pacstrap.
 _install 'binutils'
 _install_aur_manual 'pm2ml'
 _install_aur_manual 'powerpill'
+
+# Optimize
+# -----------------------------------------------------------------------------
+# Ensure we have the fatest and most-up-to-date mirrors.
+reflector -f 10 -l 10 > /etc/pacman.d/mirrorlist
 
 # Create required directories
 # -----------------------------------------------------------------------------
