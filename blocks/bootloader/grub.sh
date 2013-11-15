@@ -14,3 +14,6 @@ export KEYSTONE_DEVICE=$(readlink -e /dev/block/$(mountpoint -d $KEYSTONE_DEVICE
 
 # Install GRUB to the MBR / GPT disk.
 grub-install --root-directory=$KEYSTONE_MOUNT --boot-directory=$KEYSTONE_MOUNT/boot --target=i386-pc --recheck $KEYSTONE_DEVICE
+
+# Generate configuration file for GRUB.
+grub-mkconfig -o $KEYSTONE_MOUNT/boot/grub/grub.cfg
