@@ -48,7 +48,7 @@ if [ $KEYSTONE_WINDOW_MANAGER != 'none' ]; then
     _load "login-manager/$KEYSTONE_LOGIN_MANAGER"
 fi
 
-_ask "Network Manager" $KEYSTONE_DEFAULT_NETWORK_MANAGER KEYSTONE_DEFAULT_\NETWORK_MANAGER
+_ask "Network Manager" $KEYSTONE_DEFAULT_NETWORK_MANAGER KEYSTONE_NETWORK_MANAGER
 
 # Load deferred blocks
 # -----------------------------------------------------------------------------
