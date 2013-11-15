@@ -17,7 +17,6 @@ export KEYSTONE_MOUNT=/mnt
 
 # Configuration
 # -----------------------------------------------------------------------------
-
 _print " * Building configuration ..."
 
 _ask "Hostname (keystone): " keystone KEYSTONE_HOSTNAME
@@ -30,7 +29,6 @@ _ask "AUR helper (aura): " aura KEYSTONE_AUR_HELPER
 
 # Install base system (outside chroot)
 # -----------------------------------------------------------------------------
-
 if [[ -z $KEYSTONE_CHROOT ]]; then
 
     _print " * Partition and mount drive configuration at /mnt ..."
@@ -42,12 +40,6 @@ if [[ -z $KEYSTONE_CHROOT ]]; then
     _print " * Generate filesystem information ..."
     _load 'core/fstab'
 
-    # Set that we're in a chroot to the configuration.
-    echo "export KEYSTONE_CHROOT=1" >> ./config.sh
-
-    # Copy this repository to the new environment.
-    cp -r $(realpath $(dirname $0)) $KEYSTONE_MOUNT/root/
-
     _print " * Activating new environment ..."
     _load 'core/chroot'
 
@@ -55,7 +47,6 @@ fi
 
 # Configure system (inside chroot)
 # -----------------------------------------------------------------------------
-
 if [[ $KEYSTONE_CHROOT ]]; then
 
     _print " * Optimizing pacman ..."
