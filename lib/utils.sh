@@ -103,7 +103,7 @@ _install_aur_manual() {
     mkdir -p $build_dir
     (
         cd $build_dir
-        wget "https://aur.archlinux.org/packages/${pkg:0:2}/${pkg}/${pkg}.tar.gz"
+        curl "https://aur.archlinux.org/packages/${pkg:0:2}/${pkg}/${pkg}.tar.gz" > ${pkg}.tar.gz
         tar -xzvf ${pkg}.tar.gz; cd ${pkg}
         makepkg --asroot -si --noconfirm;
     )
