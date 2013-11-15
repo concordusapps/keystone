@@ -80,11 +80,17 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Generating initial ramdisk ..."
     _load 'core/mkinitcpio'
 
-    # _print " * Installing bootloader ..."
-    # _load "bootloader/$KEYSTONE_BOOTLOADER"
-
     _print " * Setting root password ..."
     passwd
+
+fi
+
+# Post-configure Install (outside chroot)
+# -----------------------------------------------------------------------------
+if [[ -z $KEYSTONE_CHROOT ]]; then
+
+    _print " * Installing bootloader ..."
+    _load "bootloader/$KEYSTONE_BOOTLOADER"
 
 fi
 
