@@ -58,6 +58,9 @@ _repo() {
     egrep -q "^\[$1\]" /etc/pacman.conf || \
         # Nope; add the repo to the pacman configuration.
         sed -i -e "/^\[core\]/r $KEYSTONE_DIR/lib/repo/$1" -e //N -e //N /etc/pacman.conf
+
+    # Update repositories.
+    pacman -Syy --noconfirm
 }
 
 # Install package from the offical repoistories
@@ -88,7 +91,7 @@ _install_aur() {
 
     else
         # AUR helper is not available; install the AUR helper.
-        _install_aur_manual $KEYSTONE_AUR_HELPER
+        _load "aur/$KEYSTONE_AUR_HELPER"
 
         # Now use the AUR helper to install the package.
         _install_aur $@
