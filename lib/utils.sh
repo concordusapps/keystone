@@ -55,10 +55,6 @@ function _yn {
 # -----------------------------------------------------------------------------
 _print() {
     echo -e "\E[1;37m$1"; tput sgr0
-
-    # DEBUG
-    read -p "Press any key when done... " -n1 -s
-    echo ""
 }
 
 # Countdown
