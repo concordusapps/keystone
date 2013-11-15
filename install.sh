@@ -73,3 +73,32 @@ if [[ $KEYSTONE_CHROOT ]]; then
     # TODO: boot loader
 
 fi
+##
+#Install xorg
+#----------------------------------------------------------------
+_print 'installing X11....'
+_load 'xorg/xorg-server'
+
+##
+# Configure video drivers
+#------------------------------------------------------------------
+_print 'Configuring video drivers....'
+_load 'video-drivers/video-drivers'
+
+##
+# Configure WM
+#-----------------------------------------------------------------
+
+# just going to leave it as openbox for now, until we can verify it works
+if _yn 'Would you like to use OpenBox as your Window Manager? [Y/n]' Y  ; then
+    _load 'window-manager/openbox'
+fi
+
+##
+# Desktop Manager configuration
+# -----------------------------------------------------------------
+
+#until we finish testing, gnome is all you get.
+if _yn "Would you like to use gnome?" Y; then
+    _load 'DM/gnome'
+fi
