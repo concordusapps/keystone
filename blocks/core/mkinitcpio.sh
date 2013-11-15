@@ -25,6 +25,7 @@ fi
 if ($(mounpoint /usr > /dev/null) || [ $KEYSTONE_LVM -eq 1 ]); then
     _add_hook_before 'fsck', 'usr'
     _add_hook_after 'fsck', 'shutdown'
+fi
 
 # Uncomment the compression option.
 sed -i "s/^#\(COMPRESSION=\"xz\".*\)$/\1/" /etc/mkinitcpio.conf
