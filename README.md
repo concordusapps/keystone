@@ -16,7 +16,7 @@
 Boot into the Arch Linux installation media and run the following command:
 
 ```sh
-wget git.io/dzUzRA -O keystone.sh; bash keystone.sh
+wget git.io/dzUzRA -O ks.sh; bash ks.sh
 ```
 
 ## Disclaimer
