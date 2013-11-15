@@ -73,8 +73,12 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Optimizing pacman ..."
     _load 'pacman/powerpill'
 
-    # TODO: vconsole
-    # TODO: mkinitcpio
+    _print " * Configuring virtual console font ..."
+    _load 'core/vconsole'
+
+    _print " * Generating initial ramdisk ..."
+    _load 'core/mkinitcpio'
+
     # TODO: password
     # TODO: boot loader
 
