@@ -1,35 +1,19 @@
 # Keystone
-> Arch Linux automated install procedure.
+> Arch Linux automated installation procedure.
 
 ## Prerequisites
  - somewhat recent arch linux installation media
  - network access
- - git
 
 ## Instructions
-Boot into the Arch Linux installation media and run the following commands:
+Boot into the Arch Linux installation media and run the following command:
 
 ```sh
-# Install git.
-$ pacman -Sy git --noconfirm
-
-# Clone the repository 
-$ git clone https://github.com/concordusapps/keystone.git
-
-# Navigate to and execute the install script.
-$ cd keystone
-$ sh ./install.sh
+curl git.io/3478962734 > keystone.sh; ./keystone.sh
 ```
 
-## Roadmap
- - package script that gives the following in the ISO:
-    - root password
-    - sshd service
-    - packaged git
-    - packaged repository of keystone
-    - packaged powerpill
+## Disclaimer
+**Keystone**, while awesome, is definitely in an alpha stage and is largely untested in the wild. Just because the author's state that this works in their various environments does not mean it will work in yours. The authors are not responsible if your computer turns into a toaster, fights back, explodes, installs arch linux, achieves sentience, or any variation of *not working* not described thus far.
 
- - core/chroot needs to re-execute the install.sh script
- - install.sh needs to lock down pre/post chroot in if blocks that detect chroot
- - install.sh needs to store / reload config and only ask user if file isn't found
- - 100% remote access (no git; just curl) .. it might reduce invocation burden
+## License
+Unless otherwise noted, all files contained within this project are liensed under the MIT opensource license. See the included file LICENSE or visit opensource.org for more information.

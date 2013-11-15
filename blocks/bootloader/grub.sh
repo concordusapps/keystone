@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-_bootloader_chroot() {
+_bootloader__chroot() {
     # Install the GRUB package.
     # Useful for later going back and re-generating the configuration file.
     _install 'grub'
@@ -9,11 +9,13 @@ _bootloader_chroot() {
     grub-mkconfig -o /boot/grub/grub.cfg
 }
 
-_bootloader_post_chroot() {
+_bootloader__post_chroot() {
     # Install the GRUB package.
     _install 'grub'
 
     # Discern what device /boot is located on.
+    # BUG: This procedure will fail if /boot or / is on LVM. There should
+    #      be a better way to do this.
     if $(mountpoint $KEYSTONE_MOUNT/boot > /dev/null); then
         export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT/boot
     else

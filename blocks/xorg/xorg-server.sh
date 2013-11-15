@@ -1,12 +1,18 @@
 #!/usr/bin/env sh
 
-# install X window
-_print  '** - - -installing X - - -'
-_install ' xorg-server xorg-server-utils xorg-xinit'
+# Isntall 'xorg-server' and its utilities package.
+_install 'xorg-server' 'xorg-server-utils'
 
-# Install mesa
-_print' Installing mesa for 3d support'
+# Install 'mesa' for fun.
 _install 'mesa'
 
+# Install a fallback video driver (just in case).
+_install 'xf86-video-vesa'
 
-
+# Detect and load an appropriate video card driver.
+for vendor in (intel ati nvidia via); do
+    if $(lspci -s 02 -vmm | grep -e ^Vendor: | grep -i $vendor); then
+        _load "driver/video/$vendor"
+        break
+    fi
+done

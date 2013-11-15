@@ -111,14 +111,18 @@ _repo() {
 # Install package from the offical repoistories
 # -----------------------------------------------------------------------------
 _install() {
-    [ -f /var/lib/pacman/db.lck ] || echo /var/lib/pacman/db.lck
-    pacman -Sy --noconfirm $@
+    [ -f /var/lib/pacman/db.lck ] && rm /var/lib/pacman/db.lck
+    if command -v powerpill >/dev/null 2>&1; do
+        powerpill -Sy --noconfirm $@
+    else
+        pacman -Sy --noconfirm $@
+    fi
 }
 
 # Remove package
 # -----------------------------------------------------------------------------
 _uninstall() {
-    [ -f /var/lib/pacman/db.lck ] || echo /var/lib/pacman/db.lck
+    [ -f /var/lib/pacman/db.lck ] && rm /var/lib/pacman/db.lck
     pacman -Rnsc --noconfirm $@
 }
 

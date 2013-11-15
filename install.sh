@@ -32,8 +32,20 @@ _ask "Console font" Lat2-Terminus16 KEYSTONE_CONSOLE_FONT
 _ask "Console font map" 8859-1_to_uni KEYSTONE_FONT_MAP
 _ask "Language" en_US.UTF-8 KEYSTONE_LANGUAGE
 _ask "Timezone" US/Pacific KEYSTONE_TIMEZONE
+_ask "Username" administrator KEYSTONE_USERNAME
 _ask "AUR helper" aura KEYSTONE_AUR_HELPER
 _ask "Bootloader" grub KEYSTONE_BOOTLOADER
+
+_ask "Desktop Environment" none KEYSTONE_DESKTOP_ENVIRONMENT
+_load "desktop-environment/$KEYSTONE_DESKTOP_ENVIRONMENT"
+
+_ask "Window Manager" $KEYSTONE_DEFAULT_WINDOW_MANAGER KEYSTONE_WINDOW_MANAGER
+_load "window-manager/$KEYSTONE_WINDOW_MANAGER"
+
+if [ $KEYSTONE_WINDOW_MANAGER -ne 'none' ]; then
+    _ask "Login Manager" $KEYSTONE_DEFAULT_LOGIN_MANAGER KEYSTONE_LOGIN_MANAGER
+    _load "login-manager/$KEYSTONE_LOGIN_MANAGER"
+fi
 
 # Load deferred blocks
 # -----------------------------------------------------------------------------
@@ -87,38 +99,21 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Setting root password ..."
     passwd
 
+    _print " * Adding normal user ..."
+    _load 'core/user'
+
+    if [ $KEYSTONE_XORG -eq 1 ]; then
+        _print " * Configuring display drivers ..."
+        _load 'xorg/xorg-server'
+
+        _print " * Installing desktop environment ..."
+        _desktop_environment__chroot
+        _window_manager__chroot
+        _login_manager__chroot
+    fi
+
     _print " * Installing bootloader in new environment ..."
-    _bootloader_chroot
-
-    ##
-    # Install xorg
-    #----------------------------------------------------------------
-    _print 'installing X11....'
-    _load 'xorg/xorg-server'
-
-    ##
-    # Configure video drivers
-    #------------------------------------------------------------------
-    _print 'Configuring video drivers....'
-    _load 'video-drivers/video-drivers'
-
-    ##
-    # Configure WM
-    #-----------------------------------------------------------------
-
-    # just going to leave it as openbox for now, until we can verify it works
-    if _yn 'Would you like to use OpenBox as your Window Manager? [Y/n]' Y  ; then
-        _load 'window-manager/openbox'
-    fi
-
-    ##
-    # Desktop Manager configuration
-    # -----------------------------------------------------------------
-
-    #until we finish testing, gnome is all you get.
-    if _yn "Would you like to use gnome?" Y; then
-        _load 'DM/gnome'
-    fi
+    _bootloader__chroot
 
 fi
 
@@ -127,9 +122,9 @@ fi
 if [[ -z $KEYSTONE_CHROOT ]]; then
 
     _print " * Installing bootloader on device..."
-    _bootloader_post_chroot
+    _bootloader__post_chroot
 
-    _countdown 10 "Installation completed successfully; rebooting"
+    _countdown 10 "Rebooting"
     reboot
 
 fi
