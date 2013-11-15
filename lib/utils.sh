@@ -6,7 +6,7 @@ _ask() {
     eval value=\$$3
     if [[ -z $value ]]; then
         # Prompt user for input.
-        read -e -p "$1" $3
+        read -e -p "$1 ($2): " $3
 
         # Set to default if not given
         [ -z $(eval \$$3) ] && export $3=$2
@@ -86,18 +86,26 @@ _install_aur() {
 
     else
         # AUR helper is not available; install the AUR helper.
-        local pkg=$KEYSTONE_AUR_HELPER
-        local build_dir=/tmp/build/$pkg
-        mkdir -p $build_dir
-        (
-            cd $build_dir
-            wget "https://aur.archlinux.org/packages/${pkg:0:2}/${pkg}/${pkg}.tar.gz"
-            tar -xzvf ${pkg}.tar.gz; cd ${pkg}
-            makepkg --asroot -si --noconfirm;
-        )
-        rm -rf $build_dir
+        _install_aur_manual $KEYSTONE_AUR_HELPER
 
         # Now use the AUR helper to install the package.
         _install_aur $@
     fi
+}
+
+# Install package from the AUR manually
+# -----------------------------------------------------------------------------
+# NOTE: This will FAIL if the AUR package depends on packages in the AUR that
+#       are not installed.
+_install_aur_manual() {
+    local pkg=$1
+    local build_dir=/tmp/build/$pkg
+    mkdir -p $build_dir
+    (
+        cd $build_dir
+        wget "https://aur.archlinux.org/packages/${pkg:0:2}/${pkg}/${pkg}.tar.gz"
+        tar -xzvf ${pkg}.tar.gz; cd ${pkg}
+        makepkg --asroot -si --noconfirm;
+    )
+    rm -rf $build_dir
 }

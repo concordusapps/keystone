@@ -1,5 +1,5 @@
 # Keystone
-> Arch Linux automated install procedure
+> Arch Linux automated install procedure.
 
 ## Prerequisites
  - somewhat recent arch linux installation media

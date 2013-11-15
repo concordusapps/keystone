@@ -19,13 +19,13 @@ export KEYSTONE_MOUNT=/mnt
 # -----------------------------------------------------------------------------
 _print " * Building configuration ..."
 
-_ask "Hostname (keystone): " keystone KEYSTONE_HOSTNAME
-_ask "Shell (bash): " bash KEYSTONE_SHELL
-_ask "Console font (Lat2-Terminus16): " Lat2-Terminus16 KEYSTONE_CONSOLE_FONT
-_ask "Console font map (8859-1_to_uni): " 8859-1_to_uni KEYSTONE_FONT_MAP
-_ask "Language (en_US.UTF-8): " en_US.UTF-8 KEYSTONE_LANGUAGE
-_ask "Timezone (US/Pacific): " US/Pacific KEYSTONE_TIMEZONE
-_ask "AUR helper (aura): " aura KEYSTONE_AUR_HELPER
+_ask "Hostname" keystone KEYSTONE_HOSTNAME
+_ask "Shell" bash KEYSTONE_SHELL
+_ask "Console font" Lat2-Terminus16 KEYSTONE_CONSOLE_FONT
+_ask "Console font map" 8859-1_to_uni KEYSTONE_FONT_MAP
+_ask "Language" en_US.UTF-8 KEYSTONE_LANGUAGE
+_ask "Timezone" US/Pacific KEYSTONE_TIMEZONE
+_ask "AUR helper" aura KEYSTONE_AUR_HELPER
 
 # Install base system (outside chroot)
 # -----------------------------------------------------------------------------
@@ -34,9 +34,10 @@ if [[ -z $KEYSTONE_CHROOT ]]; then
     _print " * Partition and mount drive configuration at /mnt ..."
     read -p "Press any key when done... " -n1 -s
 
-    # NOTE: install powerpill here
+    _print "\n * Optimizing pacman ..."
+    _load 'pacman/powerpill'
 
-    _print "\n * Installing base system ..."
+    _print "* Installing base system ..."
     _load 'core/base'
 
     _print " * Generate filesystem information ..."

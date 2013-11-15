@@ -2,12 +2,18 @@
 
 # Optimize
 # -----------------------------------------------------------------------------
-# TODO: Check for reflector and do this else just rankmirrors
-# reflector -f 15 -l 15 > /etc/pacman.d/mirrorlist
-
 cp /etc/pacman.d/mirrorlist{,.bak}
-
 rankmirrors -n 6 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
+
+# Install powerpill
+# -----------------------------------------------------------------------------
+# This allows us to fetch all packages concurrently during the pacstrap.
+_install_aur_manual 'pm2ml'
+_install_aur_manual 'powerpill'
+
+# Fetch all packages (concurrently) using powerpill
+# -----------------------------------------------------------------------------
+powerpill -Syy --downloadonly base base-devel
 
 # Bootstrap
 # -----------------------------------------------------------------------------
