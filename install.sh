@@ -33,6 +33,7 @@ _ask "Console font map" 8859-1_to_uni KEYSTONE_FONT_MAP
 _ask "Language" en_US.UTF-8 KEYSTONE_LANGUAGE
 _ask "Timezone" US/Pacific KEYSTONE_TIMEZONE
 _ask "AUR helper" aura KEYSTONE_AUR_HELPER
+_ask "Bootloader" grub KEYSTONE_BOOTLOADER
 
 # Install base system (outside chroot)
 # -----------------------------------------------------------------------------
@@ -79,7 +80,12 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Generating initial ramdisk ..."
     _load 'core/mkinitcpio'
 
-    # TODO: password
-    # TODO: boot loader
+    # _print " * Installing bootloader ..."
+    # _load "bootloader/$KEYSTONE_BOOTLOADER"
+
+    _print " * Setting root password ..."
+    passwd
 
 fi
+
+_print "ALL DONE!!!"
