@@ -13,7 +13,7 @@ _ask() {
 
         # Export to the configuration file.
         eval value=\$$3
-        echo "export $3=$value" >> ./config.sh
+        echo "export $3=$value" >> $KEYSTONE_DIR/config.sh
     fi
 }
 
@@ -48,7 +48,7 @@ _wait_for_network() {
 # Load and execute a block
 # -----------------------------------------------------------------------------
 _load() {
-    . "./blocks/$1.sh"
+    . "$KEYSTONE_DIR/blocks/$1.sh"
 }
 
 # Add an unofficial repository to pacman
@@ -57,18 +57,23 @@ _repo() {
     # Check if we have required this repository before.
     egrep -q "^\[$1\]" /etc/pacman.conf || \
         # Nope; add the repo to the pacman configuration.
-        sed -i -e "/^\[core\]/r ./lib/repo/$1" -e //N -e //N /etc/pacman.conf
+        sed -i -e "/^\[core\]/r $KEYSTONE_DIR/lib/repo/$1" -e //N -e //N /etc/pacman.conf
+
+    # Update repositories.
+    pacman -Syy --noconfirm
 }
 
 # Install package from the offical repoistories
 # -----------------------------------------------------------------------------
 _install() {
+    [ -f /var/lib/pacman/db.lck ] || echo /var/lib/pacman/db.lck
     pacman -Sy --noconfirm $@
 }
 
 # Remove package
 # -----------------------------------------------------------------------------
 _uninstall() {
+    [ -f /var/lib/pacman/db.lck ] || echo /var/lib/pacman/db.lck
     pacman -Rnsc --noconfirm $@
 }
 
@@ -86,7 +91,7 @@ _install_aur() {
 
     else
         # AUR helper is not available; install the AUR helper.
-        _install_aur_manual $KEYSTONE_AUR_HELPER
+        _load "aur/$KEYSTONE_AUR_HELPER"
 
         # Now use the AUR helper to install the package.
         _install_aur $@
@@ -103,7 +108,7 @@ _install_aur_manual() {
     mkdir -p $build_dir
     (
         cd $build_dir
-        wget "https://aur.archlinux.org/packages/${pkg:0:2}/${pkg}/${pkg}.tar.gz"
+        curl "https://aur.archlinux.org/packages/${pkg:0:2}/${pkg}/${pkg}.tar.gz" > ${pkg}.tar.gz
         tar -xzvf ${pkg}.tar.gz; cd ${pkg}
         makepkg --asroot -si --noconfirm;
     )
