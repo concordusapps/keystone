@@ -9,7 +9,7 @@
 Boot into the Arch Linux installation media and run the following command:
 
 ```sh
-curl git.io/3478962734 > keystone.sh; ./keystone.sh
+wget git.io/dzUzRA -O keystone.sh; bash keystone.sh
 ```
 
 ## Disclaimer
