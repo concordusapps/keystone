@@ -21,6 +21,7 @@ _wait_for_network
 # -----------------------------------------------------------------------------
 export KEYSTONE_MOUNT=/mnt
 export KEYSTONE_LC_COLLATE=C
+export KEYSTONE_DEFAULT_NETWORK_MANAGER=wicd
 
 # Dynamic Configuration
 # -----------------------------------------------------------------------------
@@ -46,6 +47,8 @@ if [ $KEYSTONE_WINDOW_MANAGER != 'none' ]; then
     _ask "Login Manager" ${KEYSTONE_DEFAULT_LOGIN_MANAGER:-none} KEYSTONE_LOGIN_MANAGER
     _load "login-manager/$KEYSTONE_LOGIN_MANAGER"
 fi
+
+_ask "Network Manager" $KEYSTONE_DEFAULT_NETWORK_MANAGER KEYSTONE_DEFAULT_\NETWORK_MANAGER
 
 # Load deferred blocks
 # -----------------------------------------------------------------------------
@@ -111,6 +114,10 @@ if [[ $KEYSTONE_CHROOT ]]; then
         _window_manager__chroot
         _login_manager__chroot
     fi
+
+    _print " * Installing network management utilities ..."
+    _load 'network/common'
+    _load "network/$KEYSTONE_NETWORK_MANAGER"
 
     _print " * Installing bootloader in new environment ..."
     _bootloader__chroot

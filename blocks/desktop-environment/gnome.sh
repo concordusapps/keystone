@@ -7,6 +7,9 @@ export KEYSTONE_XORG=1
 export KEYSTONE_DEFAULT_WINDOW_MANAGER=mutter
 export KEYSTONE_DEFAULT_LOGIN_MANAGER=gdm
 
+# Export default network manager.
+export KEYSTONE_DEFAULT_NETWORK_MANAGER=network-manager
+
 _desktop_environment__chroot() {
     # Install the gnome package.
     _install 'gnome' 'gnome-extra'
