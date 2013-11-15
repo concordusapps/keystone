@@ -4,7 +4,7 @@
 sed -i "s/^#\($KEYSTONE_LANGUAGE.*\)$/\1/" /etc/locale.gen; locale-gen
 
 # Write locale to '/etc/locale.conf'.
-localectl set-locale LANG=$KEYSTONE_LANGUAGE
+echo "LANG=$KEYSTONE_LANGUAGE" >> /etc/locale.conf
 
 # Ensure collation ordering is set to 'C' (for file/folder sorting).
-localectl set-locale LC_COLLATE=$KEYSTONE_LC_COLLATE
+echo "LC_COLLATE=$KEYSTONE_LC_COLLATE" >> /etc/locale.conf

@@ -2,4 +2,4 @@
 
 # This will create an '/etc/localtime' symlink that points to a
 # zoneinfo file under '/usr/share/zoneinfo/'.
-timedatectl set-timezone $KEYSTONE_TIMEZONE
+ln -sv ../usr/share/zoneinfo/$KEYSTONE_TIMEZONE /etc/localtime
