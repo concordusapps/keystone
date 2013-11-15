@@ -42,7 +42,7 @@ _load "desktop-environment/$KEYSTONE_DESKTOP_ENVIRONMENT"
 _ask "Window Manager" ${KEYSTONE_DEFAULT_WINDOW_MANAGER:-none} KEYSTONE_WINDOW_MANAGER
 _load "window-manager/$KEYSTONE_WINDOW_MANAGER"
 
-if [ $KEYSTONE_WINDOW_MANAGER -ne 'none' ]; then
+if [ $KEYSTONE_WINDOW_MANAGER != 'none' ]; then
     _ask "Login Manager" ${KEYSTONE_DEFAULT_LOGIN_MANAGER:-none} KEYSTONE_LOGIN_MANAGER
     _load "login-manager/$KEYSTONE_LOGIN_MANAGER"
 fi
