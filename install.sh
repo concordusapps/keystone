@@ -33,11 +33,9 @@ if [[ -z $KEYSTONE_CHROOT ]]; then
 
     _print " * Partition and mount drive configuration at /mnt ..."
     read -p "Press any key when done... " -n1 -s
+    _print ""
 
-    _print "\n * Optimizing pacman ..."
-    _load 'pacman/powerpill'
-
-    _print "* Installing base system ..."
+    _print " * Installing base system ..."
     _load 'core/base'
 
     _print " * Generate filesystem information ..."
