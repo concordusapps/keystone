@@ -1,19 +1,27 @@
 #!/usr/bin/env sh
 
-# Install the GRUB package.
-_install 'grub'
+_bootloader_chroot() {
+    # Install the GRUB package.
+    # Useful for later going back and re-generating the configuration file.
+    _install 'grub'
+}
 
-# Discern what device /boot is located on.
-if $(mountpoint $KEYSTONE_MOUNT/boot > /dev/null); then
-    export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT/boot
-else
-    export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT
-fi
+_bootloader_post_chroot() {
+    # Install the GRUB package.
+    _install 'grub'
 
-export KEYSTONE_DEVICE=$(readlink -e /dev/block/$(mountpoint -d $KEYSTONE_DEVICE_MOUNT | awk -F ':' '{print $1}'):0)
+    # Discern what device /boot is located on.
+    if $(mountpoint $KEYSTONE_MOUNT/boot > /dev/null); then
+        export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT/boot
+    else
+        export KEYSTONE_DEVICE_MOUNT=$KEYSTONE_MOUNT
+    fi
 
-# Install GRUB to the MBR / GPT disk.
-grub-install --root-directory=$KEYSTONE_MOUNT --boot-directory=$KEYSTONE_MOUNT/boot --target=i386-pc --recheck $KEYSTONE_DEVICE
+    export KEYSTONE_DEVICE=$(readlink -e /dev/block/$(mountpoint -d $KEYSTONE_DEVICE_MOUNT | awk -F ':' '{print $1}'):0)
 
-# Generate configuration file for GRUB.
-grub-mkconfig -o $KEYSTONE_MOUNT/boot/grub/grub.cfg
+    # Install GRUB to the MBR / GPT disk.
+    grub-install --root-directory=$KEYSTONE_MOUNT --boot-directory=$KEYSTONE_MOUNT/boot --target=i386-pc --recheck $KEYSTONE_DEVICE
+
+    # Generate configuration file for GRUB.
+    grub-mkconfig -o $KEYSTONE_MOUNT/boot/grub/grub.cfg
+}

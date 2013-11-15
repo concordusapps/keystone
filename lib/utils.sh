@@ -23,6 +23,17 @@ _print() {
     echo -e "\E[1;37m$1"; tput sgr0
 }
 
+# Countdown
+# -----------------------------------------------------------------------------
+_countdown ()
+{
+#
+    for i in `seq $1 -1 1`; do
+    echo -en "\r$2 in $i seconds (ctrl-c to cancel and exit) <"
+    for j in `seq 1 $i`; do echo -n "=="; done; echo -en "     \b\b\b\b\b"
+    sleep 1; done; echo
+}
+
 # Check for network access
 # -----------------------------------------------------------------------------
 _check_network() {

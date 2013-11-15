@@ -35,6 +35,10 @@ _ask "Timezone" US/Pacific KEYSTONE_TIMEZONE
 _ask "AUR helper" aura KEYSTONE_AUR_HELPER
 _ask "Bootloader" grub KEYSTONE_BOOTLOADER
 
+# Load deferred blocks
+# -----------------------------------------------------------------------------
+_load "bootloader/$KEYSTONE_BOOTLOADER"
+
 # Install base system (outside chroot)
 # -----------------------------------------------------------------------------
 if [[ -z $KEYSTONE_CHROOT ]]; then
@@ -83,15 +87,19 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Setting root password ..."
     passwd
 
+    _print " * Installing bootloader in new environment ..."
+    _bootloader_chroot
+
 fi
 
 # Post-configure Install (outside chroot)
 # -----------------------------------------------------------------------------
 if [[ -z $KEYSTONE_CHROOT ]]; then
 
-    _print " * Installing bootloader ..."
-    _load "bootloader/$KEYSTONE_BOOTLOADER"
+    _print " * Installing bootloader on device..."
+    _bootloader_post_chroot
+
+    _countdown 10 "Installation completed successfully; rebooting"
+    reboot
 
 fi
-
-_print "ALL DONE!!!"
