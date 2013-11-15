@@ -63,12 +63,14 @@ _repo() {
 # Install package from the offical repoistories
 # -----------------------------------------------------------------------------
 _install() {
+    rm /var/lib/pacman/db.lck
     pacman -Sy --noconfirm $@
 }
 
 # Remove package
 # -----------------------------------------------------------------------------
 _uninstall() {
+    rm /var/lib/pacman/db.lck
     pacman -Rnsc --noconfirm $@
 }
 
