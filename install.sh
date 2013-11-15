@@ -105,7 +105,7 @@ if [[ $KEYSTONE_CHROOT ]]; then
     _print " * Adding normal user ..."
     _load 'core/user'
 
-    if [ -n $KEYSTONE_XORG ]; then
+    if [[ -n $KEYSTONE_XORG ]]; then
         _print " * Configuring display drivers ..."
         _load 'xorg/xorg-server'
 
