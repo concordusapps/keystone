@@ -29,6 +29,8 @@ wget git.io/dzUzRA -O ks.sh; bash ks.sh
  - auto partition hard drives
  - LVM detection when installing grub
  - UEFI — automated support planned soon
+ - Grub installation. (You may need to chroot into your installation and run grub-install --force /dev/sdX)
+ - Checking of proper video drivers. You may need to remove vesa and manually install the correct driver.
  - The "interface" (the questions) is still fairly fragile; if something breaks -- let us know
 
 ## License
